@@ -3,6 +3,7 @@ import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
+import Checkbox from '../Checkbox'
 
 type TodoType = {
   id: number,
@@ -45,8 +46,18 @@ export function HomeScreen() {
       />
       <View sx={{ width: '100%', bg: 'white', borderRadius: 4, mt: 20, boxShadow: 'md' }}>
         {todos.map((todo, idx) => (
-          <View key={idx} sx={{ p: 20, borderBottomColor: 'silver', borderBottomWidth: 1 }}>
-            <Text sx={{ fontSize: 16 }}>{todo.task}</Text>
+          <View key={idx} sx={{ p: 20, borderBottomColor: 'silver', borderBottomWidth: 1, flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+            <Checkbox checked={todo.status === 'completed'}
+              onChange={checked => 
+                setTodos(_todos => _todos.map(_todo => _todo.id === todo.id ? {..._todo, status: checked ? 'completed' : 'active'} : _todo))
+              }
+            />
+            <Text sx={{ 
+              fontSize: 16,
+              textDecorationLine: (todo.status === 'completed') ? 'line-through' : undefined
+            }}>
+              {todo.task}
+            </Text>
           </View>
         ))}
       </View>
