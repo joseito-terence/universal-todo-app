@@ -1,4 +1,4 @@
-import { NativeNavigation } from 'app/navigation/native'
+import { NativeNavigation } from './navigation'
 import { Provider } from 'app/provider'
 
 export default function App() {

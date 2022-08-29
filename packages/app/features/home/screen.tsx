@@ -1,10 +1,11 @@
-import { Text, useSx, View, H1, P, Row, A, TextInput } from 'dripsy'
+import { Text, useSx, View, H1, P, Row, A, TextInput, Image } from 'dripsy'
 import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
 
 type TodoType = {
+  id: number,
   task: string,
   status: 'active' | 'completed'
 }
@@ -12,37 +13,37 @@ type TodoType = {
 export function HomeScreen() {
   const sx = useSx()
   const [todos, setTodos] = useState<TodoType[] | []>([
-    {task: 'one', status: 'active'},
-    {task: 'one', status: 'active'},
-    {task: 'one', status: 'active'},
-    {task: 'one', status: 'active'},
-    {task: 'one', status: 'active'},
+    { id: 1, task: 'one', status: 'active' },
+    { id: 2, task: 'one', status: 'active' },
+    { id: 3, task: 'one', status: 'active' },
+    { id: 4, task: 'one', status: 'active' },
+    { id: 5, task: 'one', status: 'active' },
   ])
   const [task, setTask] = useState('')
 
   return (
     <View
-      sx={{ flex: 1, p: 16, width: ['100%', 600], mx: 'auto' }}
+      sx={{ flex: 1, p: 16, width: ['100%', 600], mx: 'auto', mt: 15 }}
     >
       <H1 sx={{ fontWeight: '800', color: 'white', letterSpacing: 10 }}>TODO</H1>
-      <TextInput 
+      <TextInput
         placeholder='Create a new todo...'
         value={task}
         onChangeText={setTask}
         onSubmitEditing={() => {
-          setTodos(_todos => [...todos, { task, status: 'active' }])
+          setTodos(_todos => [...todos, { task, status: 'active', id: _todos.length + 1 }])
           setTask('')
         }}
         sx={{
-          height: 40,
           width: '100%',
-          p: 30,
+          px: 30,
+          py: 3,
           bg: 'white',
           borderRadius: 4,
           fontSize: 18,
         }}
       />
-      <View sx={{ width: '100%', bg: 'white', borderRadius: 4, mt: 10, boxShadow: 'md' }}>
+      <View sx={{ width: '100%', bg: 'white', borderRadius: 4, mt: 20, boxShadow: 'md' }}>
         {todos.map((todo, idx) => (
           <View key={idx} sx={{ p: 20, borderBottomColor: 'silver', borderBottomWidth: 1 }}>
             <Text sx={{ fontSize: 16 }}>{todo.task}</Text>

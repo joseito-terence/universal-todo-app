@@ -2,6 +2,7 @@
   "expo": {
     "name": "solito-blank",
     "slug": "solito-blank",
+    "orientation": "portrait",
     "version": "1.0.0",
     "sdkVersion": "44.0.0",
     "scheme": "solito-blank",
