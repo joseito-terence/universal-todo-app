@@ -1,8 +1,8 @@
-import { Text, useSx, View, H1, P, Row, A, TextInput, Image } from 'dripsy'
+import { Text, useSx, View, H1, P, Row, A, TextInput, Image, Pressable } from 'dripsy'
 import { TextLink } from 'solito/link'
 import { MotiLink } from 'solito/moti'
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Checkbox from '../Checkbox'
 
 type TodoType = {
@@ -21,6 +21,8 @@ export function HomeScreen() {
     { id: 5, task: 'one', status: 'active' },
   ])
   const [task, setTask] = useState('')
+
+  const activeCount = useMemo(() => todos.filter(todo => todo?.status === 'active').length , [todos])
 
   return (
     <View
@@ -60,6 +62,18 @@ export function HomeScreen() {
             </Text>
           </View>
         ))}
+
+        <Row sx={{ justifyContent: 'space-between', p: 20, fontSize: 12 }}>
+          <Text>{activeCount} items left</Text>
+          <Row sx={{ gap: 3 }}>
+            <Pressable>All</Pressable>
+            <Pressable>Active</Pressable>
+            <Pressable>Completed</Pressable>
+          </Row>
+          <Pressable>
+            Clear Completed
+          </Pressable>
+        </Row>
       </View>
 
       <View sx={{ height: 32 }} />
