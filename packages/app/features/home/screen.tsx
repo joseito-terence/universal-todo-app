@@ -13,7 +13,7 @@ type TodoType = {
 
 export function HomeScreen() {
   const sx = useSx()
-  const [todos, setTodos] = useState<TodoType[] | []>([
+  const [todos, setTodos] = useState<TodoType[]>([
     { id: 1, task: 'one', status: 'active' },
     { id: 2, task: 'one', status: 'active' },
     { id: 3, task: 'one', status: 'active' },
@@ -22,7 +22,11 @@ export function HomeScreen() {
   ])
   const [task, setTask] = useState('')
 
-  const activeCount = useMemo(() => todos.filter(todo => todo?.status === 'active').length , [todos])
+  const activeCount = useMemo(() => todos.filter(todo => todo.status === 'active').length , [todos])
+
+  const clearCompleted = () => {
+    setTodos(_todos => _todos.filter((todo) => todo.status === 'active'))
+  }
 
   return (
     <View
@@ -70,7 +74,7 @@ export function HomeScreen() {
             <Pressable>Active</Pressable>
             <Pressable>Completed</Pressable>
           </Row>
-          <Pressable>
+          <Pressable onPress={clearCompleted}>
             Clear Completed
           </Pressable>
         </Row>
