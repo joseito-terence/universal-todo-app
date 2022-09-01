@@ -14,13 +14,14 @@ type TodoType = {
 export function HomeScreen() {
   const sx = useSx()
   const [todos, setTodos] = useState<TodoType[]>([
-    { id: 1, task: 'one', status: 'active' },
-    { id: 2, task: 'one', status: 'active' },
+    { id: 1, task: 'one', status: 'completed' },
+    { id: 2, task: 'one', status: 'completed' },
     { id: 3, task: 'one', status: 'active' },
     { id: 4, task: 'one', status: 'active' },
     { id: 5, task: 'one', status: 'active' },
   ])
   const [task, setTask] = useState('')
+  const [filter, setFilter] = useState<'all' | TodoType['status']>('all')
 
   const activeCount = useMemo(() => todos.filter(todo => todo.status === 'active').length , [todos])
 
@@ -51,28 +52,31 @@ export function HomeScreen() {
         }}
       />
       <View sx={{ width: '100%', bg: 'white', borderRadius: 4, mt: 20, boxShadow: 'md' }}>
-        {todos.map((todo, idx) => (
-          <View key={idx} sx={{ p: 20, borderBottomColor: 'silver', borderBottomWidth: 1, flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-            <Checkbox checked={todo.status === 'completed'}
-              onChange={checked => 
-                setTodos(_todos => _todos.map(_todo => _todo.id === todo.id ? {..._todo, status: checked ? 'completed' : 'active'} : _todo))
-              }
-            />
-            <Text sx={{ 
-              fontSize: 16,
-              textDecorationLine: (todo.status === 'completed') ? 'line-through' : undefined
-            }}>
-              {todo.task}
-            </Text>
-          </View>
-        ))}
+        {todos
+          .filter((todo) => (filter === 'all') ? true : (todo.status === filter))
+          .map((todo, idx) => (
+            <View key={idx} sx={{ p: 20, borderBottomColor: 'silver', borderBottomWidth: 1, flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+              <Checkbox checked={todo.status === 'completed'}
+                onChange={checked => 
+                  setTodos(_todos => _todos.map(_todo => _todo.id === todo.id ? {..._todo, status: checked ? 'completed' : 'active'} : _todo))
+                }
+              />
+              <Text sx={{ 
+                fontSize: 16,
+                textDecorationLine: (todo.status === 'completed') ? 'line-through' : undefined
+              }}>
+                {todo.task}
+              </Text>
+            </View>
+          ))
+        }
 
         <Row sx={{ justifyContent: 'space-between', p: 20, fontSize: 12 }}>
           <Text>{activeCount} items left</Text>
           <Row sx={{ gap: 3 }}>
-            <Pressable>All</Pressable>
-            <Pressable>Active</Pressable>
-            <Pressable>Completed</Pressable>
+            <Pressable onPress={() => setFilter('all')}>All</Pressable>
+            <Pressable onPress={() => setFilter('active')}>Active</Pressable>
+            <Pressable onPress={() => setFilter('completed')}>Completed</Pressable>
           </Row>
           <Pressable onPress={clearCompleted}>
             Clear Completed
