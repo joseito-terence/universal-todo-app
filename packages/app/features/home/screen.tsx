@@ -11,17 +11,20 @@ type TodoType = {
   status: 'active' | 'completed'
 }
 
+type FilterType = 'all' | TodoType['status']
+
 export function HomeScreen() {
   const sx = useSx()
   const [todos, setTodos] = useState<TodoType[]>([
-    { id: 1, task: 'one', status: 'completed' },
-    { id: 2, task: 'one', status: 'completed' },
-    { id: 3, task: 'one', status: 'active' },
-    { id: 4, task: 'one', status: 'active' },
-    { id: 5, task: 'one', status: 'active' },
+    { id: 1, task: 'Complete online Javascript course', status: 'completed' },
+    { id: 2, task: 'Jog around the park 3x', status: 'completed' },
+    { id: 3, task: '10 minutes meditation', status: 'active' },
+    { id: 4, task: 'Read for 1 hour', status: 'active' },
+    { id: 5, task: 'Pick up groceries', status: 'active' },
+    { id: 6, task: 'Complete Todo App on Frontend Mentor', status: 'active' }
   ])
   const [task, setTask] = useState('')
-  const [filter, setFilter] = useState<'all' | TodoType['status']>('all')
+  const [filter, setFilter] = useState<FilterType>('all')
 
   const activeCount = useMemo(() => todos.filter(todo => todo.status === 'active').length , [todos])
 
@@ -72,11 +75,20 @@ export function HomeScreen() {
         }
 
         <Row sx={{ justifyContent: 'space-between', p: 20, fontSize: 12 }}>
-          <Text>{activeCount} items left</Text>
+          <Text sx={{ color: 'gray' }}>{activeCount} items left</Text>
           <Row sx={{ gap: 3 }}>
-            <Pressable onPress={() => setFilter('all')}>All</Pressable>
-            <Pressable onPress={() => setFilter('active')}>Active</Pressable>
-            <Pressable onPress={() => setFilter('completed')}>Completed</Pressable>
+            {['all', 'active', 'completed'].map((option: FilterType, idx) => (
+              <Pressable 
+                onPress={() => setFilter(option)} 
+                sx={{ 
+                  color: (filter === option) ? 'blue' : 'black',
+                  textTransform: 'capitalize'
+                }}
+                key={idx}
+              >
+                {option}
+              </Pressable>
+            ))}
           </Row>
           <Pressable onPress={clearCompleted}>
             Clear Completed
