@@ -18,15 +18,14 @@ export function HomeScreen() {
   const [todos, setTodos] = useState<TodoType[]>([
     { id: 1, task: 'Complete online Javascript course', status: 'completed' },
     { id: 2, task: 'Jog around the park 3x', status: 'completed' },
-    { id: 3, task: '10 minutes meditation', status: 'active' },
-    { id: 4, task: 'Read for 1 hour', status: 'active' },
-    { id: 5, task: 'Pick up groceries', status: 'active' },
-    { id: 6, task: 'Complete Todo App on Frontend Mentor', status: 'active' }
+    { id: 3, task: 'Read for 1 hour', status: 'active' },
+    { id: 4, task: 'Pick up groceries', status: 'active' },
+    { id: 5, task: 'Complete Todo App on Frontend Mentor', status: 'active' }
   ])
   const [task, setTask] = useState('')
   const [filter, setFilter] = useState<FilterType>('all')
 
-  const activeCount = useMemo(() => todos.filter(todo => todo.status === 'active').length , [todos])
+  const activeCount = useMemo(() => todos.filter(todo => todo.status === 'active').length, [todos])
 
   const clearCompleted = () => {
     setTodos(_todos => _todos.filter((todo) => todo.status === 'active'))
@@ -58,18 +57,23 @@ export function HomeScreen() {
         {todos
           .filter((todo) => (filter === 'all') ? true : (todo.status === filter))
           .map((todo, idx) => (
-            <View key={idx} sx={{ p: 20, borderBottomColor: 'silver', borderBottomWidth: 1, flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-              <Checkbox checked={todo.status === 'completed'}
-                onChange={checked => 
-                  setTodos(_todos => _todos.map(_todo => _todo.id === todo.id ? {..._todo, status: checked ? 'completed' : 'active'} : _todo))
-                }
-              />
-              <Text sx={{ 
-                fontSize: 16,
-                textDecorationLine: (todo.status === 'completed') ? 'line-through' : undefined
-              }}>
-                {todo.task}
-              </Text>
+            <View key={idx} sx={{ p: 20, borderBottomColor: 'silver', borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View sx={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                <Checkbox checked={todo.status === 'completed'}
+                  onChange={checked =>
+                    setTodos(_todos => _todos.map(_todo => _todo.id === todo.id ? { ..._todo, status: checked ? 'completed' : 'active' } : _todo))
+                  }
+                />
+                <Text sx={{
+                  fontSize: 16,
+                  textDecorationLine: (todo.status === 'completed') ? 'line-through' : undefined
+                }}>
+                  {todo.task}
+                </Text>
+              </View>
+              <Pressable onPress={() => setTodos(_todos => _todos.filter((todo, index) => index !== idx))}>
+                <Ionicons name="md-close-outline" size={30} color="gray" />
+              </Pressable>
             </View>
           ))
         }
@@ -78,9 +82,9 @@ export function HomeScreen() {
           <Text sx={{ color: 'gray' }}>{activeCount} items left</Text>
           <Row sx={{ gap: 3 }}>
             {['all', 'active', 'completed'].map((option: FilterType, idx) => (
-              <Pressable 
-                onPress={() => setFilter(option)} 
-                sx={{ 
+              <Pressable
+                onPress={() => setFilter(option)}
+                sx={{
                   color: (filter === option) ? 'blue' : 'black',
                   textTransform: 'capitalize'
                 }}
