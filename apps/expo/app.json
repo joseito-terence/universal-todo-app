@@ -1,14 +1,22 @@
 {
   "expo": {
-    "name": "solito-blank",
-    "slug": "solito-blank",
+    "name": "Universal Todo",
+    "slug": "universal-todo-app",
     "orientation": "portrait",
     "version": "1.0.0",
     "sdkVersion": "44.0.0",
     "scheme": "solito-blank",
+    "icon": "./assets/icon.png",
     "platforms": ["ios", "android"],
     "ios": {
-      "bundleIdentifier": "com.solito.blank"
+      "bundleIdentifier": "com.joseito.todo"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.joseito.terence.todo"
     }
   }
 }

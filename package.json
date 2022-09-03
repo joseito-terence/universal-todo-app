@@ -1,5 +1,5 @@
 {
-  "name": "solito-blank",
+  "name": "universal-todo-app",
   "private": true,
   "workspaces": [
     "apps/*",
