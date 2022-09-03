@@ -107,7 +107,7 @@ interface FiltersProps {
 
 const Filters = ({ filter, setFilter }: FiltersProps) => (
   <>
-    {['all', 'active', 'completed'].map((option: FilterType, idx) => (
+    {['all', 'active', 'completed'].map((option: any, idx) => (
       <Pressable
         onPress={() => setFilter(option)}
         sx={{ px: 2 }}
