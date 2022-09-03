@@ -14,7 +14,12 @@ const Stack = createNativeStackNavigator<{
 }>()
 
 const Home = () => (
-  <ScrollView>
+  <ScrollView
+    contentContainerSx={{
+      minHeight: '100%',
+      pb: 60
+    }}
+  >
     <View sx={{ position: 'absolute', width: '100%' }}>
       <Image source={HeroImage} sx={{ width: '100%' }} />
     </View>

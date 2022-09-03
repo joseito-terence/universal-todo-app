@@ -1,6 +1,4 @@
-import { Text, useSx, View, H1, P, Row, A, TextInput, Image, Pressable } from 'dripsy'
-import { TextLink } from 'solito/link'
-import { MotiLink } from 'solito/moti'
+import { Text, useSx, View, H1, Row, TextInput, Pressable, useResponsiveValue } from 'dripsy'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useMemo, useState } from 'react';
 import Checkbox from '../Checkbox'
@@ -15,6 +13,7 @@ type FilterType = 'all' | TodoType['status']
 
 export function HomeScreen() {
   const sx = useSx()
+  const isMobile = useResponsiveValue([true, false])
   const [todos, setTodos] = useState<TodoType[]>([
     { id: 1, task: 'Complete online Javascript course', status: 'completed' },
     { id: 2, task: 'Jog around the park 3x', status: 'completed' },
@@ -74,53 +73,35 @@ export function HomeScreen() {
 
         <Row sx={{ justifyContent: 'space-between', p: 20, fontSize: 12 }}>
           <Text sx={{ color: 'gray' }}>{activeCount} items left</Text>
-          <Filters filter={filter} setFilter={setFilter} />
+          {!isMobile &&
+            <Row>
+              <Filters filter={filter} setFilter={setFilter} />
+            </Row>
+          }
           <Pressable onPress={clearCompleted}>
             <Text sx={{ color: 'gray' }}>Clear Completed</Text>
           </Pressable>
         </Row>
       </View>
 
-      <View sx={{ height: 32 }} />
-      {/* <Row>
-        <TextLink
-          href="/user/fernando"
-          textProps={{
-            style: sx({ fontSize: 16, fontWeight: 'bold', color: 'blue' }),
-          }}
-        >
-          Regular Link
-        </TextLink>
-        <View sx={{ width: 32 }} />
-        <MotiLink
-          href="/user/fernando"
-          animate={({ hovered, pressed }) => {
-            'worklet'
-
-            return {
-              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-            }
-          }}
-          transition={{
-            type: 'timing',
-            duration: 150,
-          }}
-        >
-          <Text
-            selectable={false}
-            sx={{ fontSize: 16, color: 'black', fontWeight: 'bold' }}
-          >
-            Moti Link
-          </Text>
-        </MotiLink>
-      </Row> */}
+      {isMobile &&
+        <Row sx={{
+          marginTop: 10,
+          bg: 'white',
+          justifyContent: 'center',
+          alignItems: 'center',
+          p: 15,
+          borderRadius: 4
+        }}>
+          <Filters filter={filter} setFilter={setFilter} />
+        </Row>
+      }
     </View >
   )
 }
 
 const Filters = ({ filter, setFilter }) => (
-  <Row>
+  <>
     {['all', 'active', 'completed'].map((option: FilterType, idx) => (
       <Pressable
         onPress={() => setFilter(option)}
@@ -135,7 +116,7 @@ const Filters = ({ filter, setFilter }) => (
         </Text>
       </Pressable>
     ))}
-  </Row>
+  </>
 )
 
 const capitilize = (s: string) => `${s.charAt(0).toUpperCase()}${s.slice(1)}`
