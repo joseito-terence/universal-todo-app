@@ -74,11 +74,9 @@ export function HomeScreen() {
 
         <Row sx={{ justifyContent: 'space-between', p: 20, fontSize: 12 }}>
           <Text sx={{ color: 'gray' }}>{activeCount} items left</Text>
-          <Row>
-            <Filters filter={filter} setFilter={setFilter} />
-          </Row>
+          <Filters filter={filter} setFilter={setFilter} />
           <Pressable onPress={clearCompleted}>
-            <Text>Clear Completed</Text>
+            <Text sx={{ color: 'gray' }}>Clear Completed</Text>
           </Pressable>
         </Row>
       </View>
@@ -117,24 +115,27 @@ export function HomeScreen() {
           </Text>
         </MotiLink>
       </Row> */}
-    </View>
+    </View >
   )
 }
 
 const Filters = ({ filter, setFilter }) => (
-  <>
+  <Row>
     {['all', 'active', 'completed'].map((option: FilterType, idx) => (
       <Pressable
         onPress={() => setFilter(option)}
         sx={{ px: 2 }}
         key={idx}
       >
-        <Text sx={{ color: (filter === option) ? 'blue' : 'black' }}>
+        <Text sx={{
+          color: (filter === option) ? '#484b6a' : '#757575',
+          fontWeight: 600
+        }}>
           {capitilize(option)}
         </Text>
       </Pressable>
     ))}
-  </>
+  </Row>
 )
 
 const capitilize = (s: string) => `${s.charAt(0).toUpperCase()}${s.slice(1)}`

@@ -34,7 +34,9 @@ export default function Checkbox({
         pl: 2,
         fontSize: 14,
         textDecorationLine: checked ? 'line-through' : undefined,
-        flex: 1
+        flex: 1,
+        color: checked ? '#9b9b9b' : '#757575',
+        fontWeight: 600
       }}>
         {labelText}
       </Text>
