@@ -57,20 +57,14 @@ export function HomeScreen() {
         {todos
           .filter((todo) => (filter === 'all') ? true : (todo.status === filter))
           .map((todo, idx) => (
-            <View key={idx} sx={{ p: 20, borderBottomColor: 'silver', borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-              <View sx={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                <Checkbox checked={todo.status === 'completed'}
-                  onChange={checked =>
-                    setTodos(_todos => _todos.map(_todo => _todo.id === todo.id ? { ..._todo, status: checked ? 'completed' : 'active' } : _todo))
-                  }
-                />
-                <Text sx={{
-                  fontSize: 16,
-                  textDecorationLine: (todo.status === 'completed') ? 'line-through' : undefined
-                }}>
-                  {todo.task}
-                </Text>
-              </View>
+            <View key={idx} sx={{ p: 15, borderBottomColor: 'silver', borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Checkbox
+                checked={todo.status === 'completed'}
+                onChange={checked =>
+                  setTodos(_todos => _todos.map(_todo => _todo.id === todo.id ? { ..._todo, status: checked ? 'completed' : 'active' } : _todo))
+                }
+                labelText={todo.task}
+              />
               <Pressable onPress={() => setTodos(_todos => _todos.filter((todo, index) => index !== idx))}>
                 <Ionicons name="md-close-outline" size={30} color="gray" />
               </Pressable>
@@ -80,22 +74,11 @@ export function HomeScreen() {
 
         <Row sx={{ justifyContent: 'space-between', p: 20, fontSize: 12 }}>
           <Text sx={{ color: 'gray' }}>{activeCount} items left</Text>
-          <Row sx={{ gap: 3 }}>
-            {['all', 'active', 'completed'].map((option: FilterType, idx) => (
-              <Pressable
-                onPress={() => setFilter(option)}
-                sx={{
-                  color: (filter === option) ? 'blue' : 'black',
-                  textTransform: 'capitalize'
-                }}
-                key={idx}
-              >
-                {option}
-              </Pressable>
-            ))}
+          <Row>
+            <Filters filter={filter} setFilter={setFilter} />
           </Row>
           <Pressable onPress={clearCompleted}>
-            Clear Completed
+            <Text>Clear Completed</Text>
           </Pressable>
         </Row>
       </View>
@@ -137,3 +120,21 @@ export function HomeScreen() {
     </View>
   )
 }
+
+const Filters = ({ filter, setFilter }) => (
+  <>
+    {['all', 'active', 'completed'].map((option: FilterType, idx) => (
+      <Pressable
+        onPress={() => setFilter(option)}
+        sx={{ px: 2 }}
+        key={idx}
+      >
+        <Text sx={{ color: (filter === option) ? 'blue' : 'black' }}>
+          {capitilize(option)}
+        </Text>
+      </Pressable>
+    ))}
+  </>
+)
+
+const capitilize = (s: string) => `${s.charAt(0).toUpperCase()}${s.slice(1)}`
