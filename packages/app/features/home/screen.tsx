@@ -100,7 +100,12 @@ export function HomeScreen() {
   )
 }
 
-const Filters = ({ filter, setFilter }) => (
+interface FiltersProps {
+  filter: FilterType,
+  setFilter: (filter: FilterType) => void
+}
+
+const Filters = ({ filter, setFilter }: FiltersProps) => (
   <>
     {['all', 'active', 'completed'].map((option: FilterType, idx) => (
       <Pressable
