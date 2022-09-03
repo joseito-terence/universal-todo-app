@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { HomeScreen } from 'app/features/home/screen'
 import { UserDetailScreen } from 'app/features/user/detail-screen'
-import { View, Image } from 'dripsy'
+import { View, Image, ScrollView } from 'dripsy'
 import HeroImage from './assets/bg-mobile-light.jpg'
 
 const Stack = createNativeStackNavigator<{
@@ -14,12 +14,12 @@ const Stack = createNativeStackNavigator<{
 }>()
 
 const Home = () => (
-  <>
+  <ScrollView>
     <View sx={{ position: 'absolute', width: '100%' }}>
       <Image source={HeroImage} sx={{ width: '100%' }} />
     </View>
     <HomeScreen />
-  </>
+  </ScrollView>
 )
 
 export function NativeNavigation() {
