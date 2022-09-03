@@ -129,7 +129,7 @@ const Filters = ({ filter, setFilter }) => (
       >
         <Text sx={{
           color: (filter === option) ? '#484b6a' : '#757575',
-          fontWeight: 600
+          fontWeight: 'bold'
         }}>
           {capitilize(option)}
         </Text>

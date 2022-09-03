@@ -17,7 +17,11 @@ export default function Checkbox({
 }: CheckboxProps) {
   return (
     <Pressable
-      sx={{ flexDirection: 'row', alignItems: 'center' }}
+      sx={{ 
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center'
+      }}
       onPress={() => onChange(!checked)}
     >
       {checked ? (
@@ -36,7 +40,7 @@ export default function Checkbox({
         textDecorationLine: checked ? 'line-through' : undefined,
         flex: 1,
         color: checked ? '#9b9b9b' : '#757575',
-        fontWeight: 600
+        fontWeight: 'bold'
       }}>
         {labelText}
       </Text>
